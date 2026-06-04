@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a3d47">
+<title>Limpiezas · South Padre Island — Wanderhaus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ocean:#0a3d47; --ocean-2:#0d4f5c; --teal:#1b7a8c; --teal-soft:#dff0f0;
+  --sand:#f6f1e7; --sand-2:#fbf7ee; --card:#ffffff; --ink:#15201f; --muted:#5e6f6d;
+  --coral:#e1542a; --coral-soft:#fde7df; --coral-line:#f0a98e;
+  --gold:#c79a3a; --line:#e7dfd0; --shadow:0 1px 2px rgba(20,40,40,.05),0 8px 24px rgba(20,40,40,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{font-size:16px}
+body{
+  font-family:'Manrope',system-ui,sans-serif;color:var(--ink);
+  background:
+    radial-gradient(120% 60% at 50% 0%, #0e5360 0%, var(--ocean) 42%, transparent 42.2%),
+    var(--sand);
+  min-height:100dvh;line-height:1.45;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.wrap{max-width:560px;margin:0 auto;padding:0 16px}
+
+/* ---------- HEADER ---------- */
+header{padding:26px 0 18px;color:#eaf6f5;position:relative;overflow:hidden}
+.brand{display:flex;align-items:center;gap:11px}
+.logo{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;
+  background:linear-gradient(150deg,#2aa0ab,#0d4f5c);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.logo svg{width:21px;height:21px}
+.brand-txt b{font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;letter-spacing:.14em;display:block;line-height:1}
+.brand-txt span{font-size:.66rem;letter-spacing:.34em;text-transform:uppercase;color:#9fd0cf;font-weight:600}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:1.72rem;line-height:1.08;margin-top:18px;color:#fff}
+.sub{color:#a9d4d2;font-size:.92rem;margin-top:6px;font-weight:500}
+.todaybar{margin-top:16px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);
+  border-radius:14px;padding:11px 14px;display:flex;align-items:center;gap:12px;backdrop-filter:blur(6px)}
+.todaybar .big{font-family:'Fraunces',serif;font-size:1.5rem;color:#fff;line-height:1}
+.todaybar small{color:#bfe0de;font-size:.78rem;display:block;letter-spacing:.02em}
+.todaybar .pill{margin-left:auto;background:var(--coral);color:#fff;font-weight:700;font-size:.74rem;
+  padding:5px 10px;border-radius:999px;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.todaybar .pill.none{background:rgba(255,255,255,.16);color:#dff0ef}
+
+/* ---------- CONTROLS ---------- */
+.panel{background:var(--sand-2);border:1px solid var(--line);border-radius:20px 20px 0 0;
+  margin-top:18px;padding:16px 16px 4px;box-shadow:var(--shadow);min-height:60dvh}
+.toggle{display:flex;background:#efe7d7;border-radius:12px;padding:4px;gap:4px}
+.toggle button{flex:1;border:0;background:transparent;font-family:inherit;font-weight:700;
+  font-size:.9rem;color:var(--muted);padding:9px;border-radius:9px;cursor:pointer;transition:.18s}
+.toggle button.on{background:#fff;color:var(--ocean);box-shadow:0 1px 2px rgba(0,0,0,.06)}
+
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin:14px 2px 4px;font-size:.78rem;color:var(--muted)}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block;margin-right:6px;vertical-align:-1px}
+.legend .ls{background:var(--teal)} .legend .lt{background:var(--coral)}
+.legend b{color:var(--ink);font-weight:700}
+
+.filters{display:flex;gap:8px;overflow-x:auto;padding:14px 2px 6px;scrollbar-width:none;-ms-overflow-style:none}
+.filters::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;
+  font-weight:600;font-size:.84rem;color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:.16s}
+.chip .dot{width:9px;height:9px;border-radius:50%}
+.chip.on{background:var(--ocean);color:#fff;border-color:var(--ocean)}
+.chip.on .dot{box-shadow:0 0 0 2px rgba(255,255,255,.4)}
+
+/* ---------- AGENDA ---------- */
+#agenda{padding:6px 0 30px}
+.day{margin-top:18px}
+.day-h{display:flex;align-items:baseline;gap:10px;padding:8px 4px;position:sticky;top:0;z-index:5;
+  background:linear-gradient(var(--sand-2) 72%,rgba(251,247,238,0));backdrop-filter:blur(2px)}
+.day-num{font-family:'Fraunces',serif;font-size:1.55rem;color:var(--ocean);line-height:1;font-weight:600}
+.day-meta{display:flex;flex-direction:column}
+.day-wd{font-size:.7rem;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);font-weight:700}
+.day-mo{font-size:.82rem;color:var(--muted);font-weight:600;text-transform:capitalize}
+.day-cnt{margin-left:auto;font-size:.76rem;font-weight:700;color:var(--teal);background:var(--teal-soft);
+  padding:5px 11px;border-radius:999px}
+.today-tag{font-size:.66rem;font-weight:800;letter-spacing:.08em;color:#fff;background:var(--coral);
+  padding:3px 8px;border-radius:999px;text-transform:uppercase;align-self:center}
+
+.card{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--teal);
+  border-radius:14px;padding:14px 15px;margin-top:9px;display:flex;align-items:center;gap:13px;box-shadow:var(--shadow)}
+.card.turn{border-left-color:var(--coral);background:linear-gradient(90deg,var(--coral-soft),#fff 38%)}
+.gicon{width:42px;height:42px;border-radius:11px;flex:none;display:grid;place-items:center;font-weight:800;
+  font-size:.78rem;color:#fff;letter-spacing:.02em}
+.card .info{min-width:0;flex:1}
+.card .nm{font-weight:700;font-size:1.05rem;line-height:1.1;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card .tags{margin-top:5px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tag{font-size:.72rem;font-weight:600;color:var(--muted);background:#f1ece1;padding:3px 9px;border-radius:7px}
+.salida{font-size:.72rem;font-weight:700;color:var(--teal);display:inline-flex;align-items:center;gap:5px}
+.badge-turn{background:var(--coral);color:#fff;font-size:.72rem;font-weight:800;padding:5px 10px;border-radius:8px;
+  display:inline-flex;align-items:center;gap:6px;letter-spacing:.01em;box-shadow:0 2px 8px rgba(225,84,42,.28)}
+.arrowin{width:13px;height:13px}
+
+.empty{text-align:center;color:var(--muted);padding:48px 20px;font-weight:500}
+.empty svg{width:46px;height:46px;opacity:.45;margin-bottom:12px}
+
+/* ---------- MONTH ---------- */
+#month{padding:10px 0 30px;display:none}
+.mnav{display:flex;align-items:center;justify-content:space-between;padding:8px 2px 12px}
+.mnav button{width:40px;height:40px;border-radius:11px;border:1px solid var(--line);background:#fff;
+  font-size:1.2rem;color:var(--ocean);cursor:pointer;display:grid;place-items:center}
+.mnav b{font-family:'Fraunces',serif;font-size:1.25rem;color:var(--ocean);text-transform:capitalize;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.wd{text-align:center;font-size:.68rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;padding-bottom:4px}
+.cell{aspect-ratio:1/1.06;border:1px solid var(--line);border-radius:11px;background:#fff;padding:6px 5px;
+  display:flex;flex-direction:column;cursor:default;position:relative;overflow:hidden}
+.cell.empty-cell{background:transparent;border-color:transparent}
+.cell.has{cursor:pointer;border-color:var(--teal-soft)}
+.cell.today{outline:2px solid var(--coral);outline-offset:-2px}
+.cell .d{font-size:.82rem;font-weight:700;color:var(--ink)}
+.cell.has .d{color:var(--ocean)}
+.cell .c{margin-top:auto;font-size:.7rem;font-weight:800;color:var(--teal);background:var(--teal-soft);
+  border-radius:6px;text-align:center;padding:2px 0}
+.cell .tdot{position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;background:var(--coral)}
+.mlegend{font-size:.76rem;color:var(--muted);text-align:center;margin-top:16px;line-height:1.6}
+
+footer{text-align:center;color:var(--muted);font-size:.74rem;padding:20px 16px 30px}
+footer b{color:var(--ocean)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 11.5 12 4l9 7.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 10.5V20h14v-9.5" stroke="#cdeeee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.5 20v-5h5v5" stroke="#cdeeee" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </div>
+      <div class="brand-txt"><b>WANDERHAUS</b><span>Operaciones</span></div>
+    </div>
+    <h1>Calendario de Limpiezas</h1>
+    <div class="sub">South Padre Island · Salidas del día</div>
+    <div class="todaybar" id="todaybar"></div>
+  </header>
+</div>
+
+<div class="wrap">
+  <div class="panel">
+    <div class="toggle">
+      <button id="tgList" class="on" onclick="setView('list')">Lista de salidas</button>
+      <button id="tgMonth" onclick="setView('month')">Vista mes</button>
+    </div>
+
+    <div class="legend">
+      <span><i class="ls"></i><b>Salida</b> — limpieza normal</span>
+      <span><i class="lt"></i><b>Mismo día</b> — entra huésped, dejar listo</span>
+    </div>
+
+    <div class="filters" id="filters"></div>
+
+    <div id="agenda"></div>
+
+    <div id="month">
+      <div class="mnav">
+        <button onclick="moveMonth(-1)" aria-label="Mes anterior">‹</button>
+        <b id="mLabel"></b>
+        <button onclick="moveMonth(1)" aria-label="Mes siguiente">›</button>
+      </div>
+      <div class="grid" id="mGrid"></div>
+      <div class="mlegend">Toca un día con limpiezas para ver el detalle.<br>El punto <span style="color:var(--coral);font-weight:800">●</span> indica que ese día hay una entrada el mismo día.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <b>Wanderhaus</b> · Uso interno del equipo de limpieza<br>
+  Actualizado: 4 jun 2026 · Solo se muestran salidas, no entradas.
+</footer>
+
+<script>
+const DATA = [{"date":"2026-06-04","unit":"AMB2","name":"Amberjack 2","group":"Amberjack","beds":"2 rec","turnover":true},{"date":"2026-06-04","unit":"AMB4","name":"Amberjack 4","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-06-04","unit":"Sol Azul 2A","name":"Sol Azul 2A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-06-05","unit":"AMB5","name":"Amberjack 5","group":"Amberjack","beds":"3 rec","turnover":true},{"date":"2026-06-06","unit":"AMB2","name":"Amberjack 2","group":"Amberjack","beds":"2 rec","turnover":true},{"date":"2026-06-06","unit":"AMB7","name":"Amberjack 7","group":"Amberjack","beds":"3 rec","turnover":true},{"date":"2026-06-06","unit":"FDS","name":"Fiesta del Sol","group":"Fiesta del Sol","beds":"condo","turnover":true},{"date":"2026-06-07","unit":"AMB1","name":"Amberjack 1","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-06-07","unit":"AMB3","name":"Amberjack 3","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-06-07","unit":"AMB3","name":"Amberjack 3","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-06-07","unit":"AMB4","name":"Amberjack 4","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-06-07","unit":"Sol Azul 1A","name":"Sol Azul 1A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-06-07","unit":"Sol Azul 1B","name":"Sol Azul 1B","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-06-07","unit":"Sol Azul 2A","name":"Sol Azul 2A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-06-08","unit":"AMB6","name":"Amberjack 6","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-06-08","unit":"FDS","name":"Fiesta del Sol","group":"Fiesta del Sol","beds":"condo","turnover":false},{"date":"2026-06-08","unit":"Sol Azul 2B","name":"Sol Azul 2B","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-06-09","unit":"AMB2","name":"Amberjack 2","group":"Amberjack","beds":"2 rec","turnover":true},{"date":"2026-06-09","unit":"AMB5","name":"Amberjack 5","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-06-09","unit":"AMB7","name":"Amberjack 7","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-06-09","unit":"Sol Azul 1A","name":"Sol Azul 1A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-06-11","unit":"AMB2","name":"Amberjack 2","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-06-11","unit":"AMB8","name":"Amberjack 8","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-06-11","unit":"Sol Azul 1A","name":"Sol Azul 1A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-06-11","unit":"Sol Azul 2B","name":"Sol Azul 2B","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-06-12","unit":"Sol Azul 2A","name":"Sol Azul 2A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-06-13","unit":"Sol Azul 1A","name":"Sol Azul 1A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-06-14","unit":"AMB1","name":"Amberjack 1","group":"Amberjack","beds":"2 rec","turnover":true},{"date":"2026-06-14","unit":"AMB2","name":"Amberjack 2","group":"Amberjack","beds":"2 rec","turnover":true},{"date":"2026-06-14","unit":"AMB5","name":"Amberjack 5","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-06-14","unit":"AMB6","name":"Amberjack 6","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-06-14","unit":"AMB8","name":"Amberjack 8","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-06-14","unit":"FDS","name":"Fiesta del Sol","group":"Fiesta del Sol","beds":"condo","turnover":false},{"date":"2026-06-14","unit":"Sol Azul 2A","name":"Sol Azul 2A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-06-14","unit":"Sol Azul 2B","name":"Sol Azul 2B","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-06-15","unit":"AMB7","name":"Amberjack 7","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-06-17","unit":"AMB3","name":"Amberjack 3","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-06-17","unit":"AMB4","name":"Amberjack 4","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-06-17","unit":"Sol Azul 2A","name":"Sol Azul 2A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-06-17","unit":"Sol Azul 2B","name":"Sol Azul 2B","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-06-18","unit":"AMB8","name":"Amberjack 8","group":"Amberjack","beds":"3 rec","turnover":true},{"date":"2026-06-18","unit":"Sol Azul 1A","name":"Sol Azul 1A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-06-19","unit":"AMB1","name":"Amberjack 1","group":"Amberjack","beds":"2 rec","turnover":true},{"date":"2026-06-19","unit":"AMB2","name":"Amberjack 2","group":"Amberjack","beds":"2 rec","turnover":true},{"date":"2026-06-19","unit":"AMB7","name":"Amberjack 7","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-06-21","unit":"AMB1","name":"Amberjack 1","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-06-21","unit":"AMB2","name":"Amberjack 2","group":"Amberjack","beds":"2 rec","turnover":true},{"date":"2026-06-21","unit":"AMB3","name":"Amberjack 3","group":"Amberjack","beds":"2 rec","turnover":true},{"date":"2026-06-21","unit":"AMB4","name":"Amberjack 4","group":"Amberjack","beds":"2 rec","turnover":true},{"date":"2026-06-21","unit":"AMB6","name":"Amberjack 6","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-06-21","unit":"AMB8","name":"Amberjack 8","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-06-21","unit":"Sol Azul 1A","name":"Sol Azul 1A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-06-21","unit":"Sol Azul 2A","name":"Sol Azul 2A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-06-22","unit":"AMB5","name":"Amberjack 5","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-06-22","unit":"Sol Azul 1B","name":"Sol Azul 1B","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-06-22","unit":"Sol Azul 2B","name":"Sol Azul 2B","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-06-23","unit":"FDS","name":"Fiesta del Sol","group":"Fiesta del Sol","beds":"condo","turnover":false},{"date":"2026-06-24","unit":"Sol Azul 2A","name":"Sol Azul 2A","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-06-25","unit":"AMB2","name":"Amberjack 2","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-06-25","unit":"Sol Azul 1A","name":"Sol Azul 1A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-06-26","unit":"AMB1","name":"Amberjack 1","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-06-26","unit":"FDS","name":"Fiesta del Sol","group":"Fiesta del Sol","beds":"condo","turnover":true},{"date":"2026-06-27","unit":"AMB5","name":"Amberjack 5","group":"Amberjack","beds":"3 rec","turnover":true},{"date":"2026-06-27","unit":"AMB7","name":"Amberjack 7","group":"Amberjack","beds":"3 rec","turnover":true},{"date":"2026-06-27","unit":"Sol Azul 1A","name":"Sol Azul 1A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-06-28","unit":"AMB4","name":"Amberjack 4","group":"Amberjack","beds":"2 rec","turnover":true},{"date":"2026-06-28","unit":"AMB6","name":"Amberjack 6","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-06-28","unit":"FDS","name":"Fiesta del Sol","group":"Fiesta del Sol","beds":"condo","turnover":true},{"date":"2026-06-28","unit":"Sol Azul 2B","name":"Sol Azul 2B","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-06-29","unit":"AMB2","name":"Amberjack 2","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-06-29","unit":"AMB5","name":"Amberjack 5","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-06-29","unit":"AMB8","name":"Amberjack 8","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-06-29","unit":"Sol Azul 1A","name":"Sol Azul 1A","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-06-29","unit":"Sol Azul 1B","name":"Sol Azul 1B","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-07-01","unit":"AMB7","name":"Amberjack 7","group":"Amberjack","beds":"3 rec","turnover":true},{"date":"2026-07-01","unit":"Sol Azul 2A","name":"Sol Azul 2A","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-07-01","unit":"Sol Azul 2B","name":"Sol Azul 2B","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-07-02","unit":"AMB4","name":"Amberjack 4","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-07-03","unit":"AMB1","name":"Amberjack 1","group":"Amberjack","beds":"2 rec","turnover":true},{"date":"2026-07-03","unit":"FDS","name":"Fiesta del Sol","group":"Fiesta del Sol","beds":"condo","turnover":true},{"date":"2026-07-04","unit":"Sol Azul 1A","name":"Sol Azul 1A","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-07-05","unit":"AMB5","name":"Amberjack 5","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-07-05","unit":"AMB6","name":"Amberjack 6","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-07-05","unit":"AMB7","name":"Amberjack 7","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-07-06","unit":"AMB2","name":"Amberjack 2","group":"Amberjack","beds":"2 rec","turnover":true},{"date":"2026-07-06","unit":"AMB3","name":"Amberjack 3","group":"Amberjack","beds":"2 rec","turnover":true},{"date":"2026-07-06","unit":"FDS","name":"Fiesta del Sol","group":"Fiesta del Sol","beds":"condo","turnover":false},{"date":"2026-07-07","unit":"AMB1","name":"Amberjack 1","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-07-07","unit":"AMB8","name":"Amberjack 8","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-07-07","unit":"Sol Azul 2A","name":"Sol Azul 2A","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-07-08","unit":"AMB4","name":"Amberjack 4","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-07-09","unit":"Sol Azul 1A","name":"Sol Azul 1A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-07-09","unit":"Sol Azul 2B","name":"Sol Azul 2B","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-07-10","unit":"AMB2","name":"Amberjack 2","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-07-10","unit":"AMB3","name":"Amberjack 3","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-07-11","unit":"AMB7","name":"Amberjack 7","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-07-12","unit":"AMB5","name":"Amberjack 5","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-07-12","unit":"Sol Azul 1B","name":"Sol Azul 1B","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-07-12","unit":"Sol Azul 2A","name":"Sol Azul 2A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-07-13","unit":"AMB8","name":"Amberjack 8","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-07-13","unit":"Sol Azul 1A","name":"Sol Azul 1A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-07-13","unit":"Sol Azul 2B","name":"Sol Azul 2B","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-07-15","unit":"Sol Azul 1B","name":"Sol Azul 1B","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-07-16","unit":"AMB2","name":"Amberjack 2","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-07-16","unit":"AMB3","name":"Amberjack 3","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-07-17","unit":"Sol Azul 2A","name":"Sol Azul 2A","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-07-18","unit":"AMB4","name":"Amberjack 4","group":"Amberjack","beds":"2 rec","turnover":true},{"date":"2026-07-18","unit":"AMB6","name":"Amberjack 6","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-07-18","unit":"FDS","name":"Fiesta del Sol","group":"Fiesta del Sol","beds":"condo","turnover":false},{"date":"2026-07-18","unit":"Sol Azul 1A","name":"Sol Azul 1A","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-07-19","unit":"Sol Azul 2B","name":"Sol Azul 2B","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-07-20","unit":"AMB5","name":"Amberjack 5","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-07-20","unit":"AMB8","name":"Amberjack 8","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-07-20","unit":"Sol Azul 1B","name":"Sol Azul 1B","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-07-21","unit":"AMB4","name":"Amberjack 4","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-07-21","unit":"AMB7","name":"Amberjack 7","group":"Amberjack","beds":"3 rec","turnover":true},{"date":"2026-07-22","unit":"AMB2","name":"Amberjack 2","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-07-23","unit":"AMB1","name":"Amberjack 1","group":"Amberjack","beds":"2 rec","turnover":true},{"date":"2026-07-23","unit":"AMB3","name":"Amberjack 3","group":"Amberjack","beds":"2 rec","turnover":true},{"date":"2026-07-24","unit":"Sol Azul 2A","name":"Sol Azul 2A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-07-26","unit":"AMB2","name":"Amberjack 2","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-07-26","unit":"AMB3","name":"Amberjack 3","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-07-26","unit":"AMB4","name":"Amberjack 4","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-07-26","unit":"AMB5","name":"Amberjack 5","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-07-26","unit":"AMB8","name":"Amberjack 8","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-07-26","unit":"Sol Azul 1A","name":"Sol Azul 1A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-07-26","unit":"Sol Azul 1B","name":"Sol Azul 1B","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-07-27","unit":"FDS","name":"Fiesta del Sol","group":"Fiesta del Sol","beds":"condo","turnover":false},{"date":"2026-07-27","unit":"Sol Azul 2A","name":"Sol Azul 2A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-07-28","unit":"AMB6","name":"Amberjack 6","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-07-28","unit":"AMB7","name":"Amberjack 7","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-07-30","unit":"Sol Azul 1A","name":"Sol Azul 1A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-07-31","unit":"AMB1","name":"Amberjack 1","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-07-31","unit":"Sol Azul 2A","name":"Sol Azul 2A","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-08-02","unit":"AMB2","name":"Amberjack 2","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-08-02","unit":"AMB8","name":"Amberjack 8","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2026-08-02","unit":"Sol Azul 1A","name":"Sol Azul 1A","group":"Sol Azul","beds":"condo","turnover":true},{"date":"2026-08-07","unit":"AMB2","name":"Amberjack 2","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-08-07","unit":"Sol Azul 1A","name":"Sol Azul 1A","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-08-08","unit":"AMB4","name":"Amberjack 4","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-08-09","unit":"FDS","name":"Fiesta del Sol","group":"Fiesta del Sol","beds":"condo","turnover":false},{"date":"2026-08-09","unit":"Sol Azul 2A","name":"Sol Azul 2A","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-08-15","unit":"AMB2","name":"Amberjack 2","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2026-08-22","unit":"Sol Azul 1A","name":"Sol Azul 1A","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2026-08-25","unit":"Sol Azul 2A","name":"Sol Azul 2A","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2027-02-22","unit":"AMB7","name":"Amberjack 7","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2027-02-26","unit":"AMB5","name":"Amberjack 5","group":"Amberjack","beds":"3 rec","turnover":false},{"date":"2027-03-01","unit":"AMB4","name":"Amberjack 4","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2027-03-06","unit":"Sol Azul 1A","name":"Sol Azul 1A","group":"Sol Azul","beds":"condo","turnover":false},{"date":"2027-03-15","unit":"AMB1","name":"Amberjack 1","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2027-03-20","unit":"AMB3","name":"Amberjack 3","group":"Amberjack","beds":"2 rec","turnover":false},{"date":"2027-05-02","unit":"Sol Azul 2A","name":"Sol Azul 2A","group":"Sol Azul","beds":"condo","turnover":false}];
+const TODAY = "2026-06-04";
+
+const GROUPS = {
+  "Amberjack":   {color:"#1b7a8c", ab:"AMB"},
+  "Sol Azul":    {color:"#2f5fa0", ab:"SA"},
+  "Fiesta del Sol":{color:"#c79a3a", ab:"FDS"}
+};
+const WD   = ["dom","lun","mar","mié","jue","vie","sáb"];
+const WD_L = ["L","M","M","J","V","S","D"];
+const MO   = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+
+let filter = "Todas";
+let view = "list";
+
+function parse(d){const [y,m,day]=d.split("-").map(Number);return new Date(y,m-1,day);}
+function fmtUnitIcon(g){return GROUPS[g]?GROUPS[g].ab:"·";}
+
+/* ---- group data by date ---- */
+function byDate(){
+  const map={};
+  DATA.forEach(r=>{
+    if(filter!=="Todas" && r.group!==filter) return;
+    (map[r.date]=map[r.date]||[]).push(r);
+  });
+  Object.values(map).forEach(arr=>arr.sort((a,b)=> (b.turnover-a.turnover) || a.name.localeCompare(b.name)));
+  return map;
+}
+
+/* ---- today bar ---- */
+function renderToday(){
+  const todays = DATA.filter(r=>r.date===TODAY);
+  const turns = todays.filter(r=>r.turnover).length;
+  const d=parse(TODAY);
+  let pill = todays.length
+     ? `<span class="pill ${turns?'':'none'}">${turns?('⚡ '+turns+' mismo día'):(todays.length+' limpiezas')}</span>`
+     : `<span class="pill none">Sin salidas</span>`;
+  document.getElementById('todaybar').innerHTML =
+    `<div><span class="big">${d.getDate()}</span></div>
+     <div><small style="text-transform:uppercase;letter-spacing:.12em">Hoy · ${WD[d.getDay()]}</small>
+     <small>${todays.length} salida${todays.length===1?'':'s'} para limpiar</small></div>
+     ${todays.length?pill:'<span class="pill none">Sin salidas hoy</span>'}`;
+}
+
+/* ---- filters ---- */
+function renderFilters(){
+  const counts={Todas:DATA.length};
+  DATA.forEach(r=>counts[r.group]=(counts[r.group]||0)+1);
+  const order=["Todas","Amberjack","Sol Azul","Fiesta del Sol"];
+  document.getElementById('filters').innerHTML = order.map(g=>{
+    const dot = g==="Todas"?"":`<span class="dot" style="background:${GROUPS[g].color}"></span>`;
+    return `<button class="chip ${g===filter?'on':''}" onclick="setFilter('${g}')">${dot}${g}<span style="opacity:.6">${counts[g]||0}</span></button>`;
+  }).join("");
+}
+
+/* ---- agenda ---- */
+function renderAgenda(){
+  const map=byDate();
+  const dates=Object.keys(map).sort();
+  const el=document.getElementById('agenda');
+  if(!dates.length){el.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none"><path d="M5 7h14M5 12h14M5 17h9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><div>No hay salidas para este filtro.</div></div>`;return;}
+  el.innerHTML = dates.map(date=>{
+    const d=parse(date), arr=map[date], turns=arr.filter(r=>r.turnover).length;
+    const isToday = date===TODAY;
+    const cards = arr.map(r=>{
+      const col=GROUPS[r.group]?GROUPS[r.group].color:"#888";
+      const beds = r.beds && r.beds!=="condo" ? `<span class="tag">${r.beds}</span>`:"";
+      const flag = r.turnover
+        ? `<span class="badge-turn"><svg class="arrowin" viewBox="0 0 24 24" fill="none"><path d="M5 12h12M13 6l6 6-6 6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>MISMO DÍA · entra huésped</span>`
+        : `<span class="salida"><svg class="arrowin" viewBox="0 0 24 24" fill="none"><path d="M19 12H7M11 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Salida</span>`;
+      return `<div class="card ${r.turnover?'turn':''}">
+        <div class="gicon" style="background:${col}">${fmtUnitIcon(r.group)}</div>
+        <div class="info">
+          <div class="nm">${r.name}</div>
+          <div class="tags">${flag}${beds}<span class="tag">${r.group}</span></div>
+        </div></div>`;
+    }).join("");
+    return `<section class="day" id="d-${date}">
+      <div class="day-h">
+        <span class="day-num">${d.getDate()}</span>
+        <div class="day-meta"><span class="day-wd">${WD[d.getDay()]}</span><span class="day-mo">${MO[d.getMonth()]}</span></div>
+        ${isToday?'<span class="today-tag">Hoy</span>':''}
+        <span class="day-cnt">${arr.length} ·${turns?' ⚡'+turns:' limpieza'+(arr.length===1?'':'s')}</span>
+      </div>${cards}</section>`;
+  }).join("");
+}
+
+/* ---- month ---- */
+let mDate = parse(TODAY); mDate.setDate(1);
+function renderMonth(){
+  const y=mDate.getFullYear(), m=mDate.getMonth();
+  document.getElementById('mLabel').textContent = `${MO[m]} ${y}`;
+  const map=byDate();
+  const first=new Date(y,m,1), start=(first.getDay()+6)%7; // Monday first
+  const dim=new Date(y,m+1,0).getDate();
+  let cells = WD_L.map(w=>`<div class="wd">${w}</div>`).join("");
+  for(let i=0;i<start;i++) cells+=`<div class="cell empty-cell"></div>`;
+  for(let dd=1;dd<=dim;dd++){
+    const key=`${y}-${String(m+1).padStart(2,'0')}-${String(dd).padStart(2,'0')}`;
+    const arr=map[key]||[]; const turns=arr.some(r=>r.turnover);
+    const isToday=key===TODAY;
+    cells+=`<div class="cell ${arr.length?'has':''} ${isToday?'today':''}" ${arr.length?`onclick="jumpTo('${key}')"`:''}>
+      <span class="d">${dd}</span>
+      ${turns?'<span class="tdot"></span>':''}
+      ${arr.length?`<span class="c">${arr.length}</span>`:''}
+    </div>`;
+  }
+  document.getElementById('mGrid').innerHTML=cells;
+}
+function moveMonth(n){mDate.setMonth(mDate.getMonth()+n);renderMonth();}
+function jumpTo(key){
+  setView('list');
+  const t=document.getElementById('d-'+key);
+  if(t){t.scrollIntoView({behavior:'smooth',block:'start'});t.querySelector('.day-h').style.animation='none';}
+}
+
+/* ---- view + filter switching ---- */
+function setView(v){
+  view=v;
+  document.getElementById('agenda').style.display = v==='list'?'block':'none';
+  document.getElementById('month').style.display  = v==='month'?'block':'none';
+  document.getElementById('tgList').classList.toggle('on',v==='list');
+  document.getElementById('tgMonth').classList.toggle('on',v==='month');
+  if(v==='month') renderMonth();
+}
+function setFilter(g){filter=g;renderFilters();renderAgenda();if(view==='month')renderMonth();}
+
+/* ---- init ---- */
+renderToday();renderFilters();renderAgenda();
+</script>
+</body>
+</html>
