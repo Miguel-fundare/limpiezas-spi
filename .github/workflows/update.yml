@@ -1,0 +1,29 @@
+name: Actualizar calendario de limpiezas
+
+on:
+  schedule:
+    - cron: "0 11 * * *"     # todos los dias 11:00 UTC (~6am en South Padre)
+  workflow_dispatch: {}        # boton para correrlo manual cuando quieras
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Generar index.html
+        env:
+          AIRBNB_FEEDS: ${{ secrets.AIRBNB_FEEDS }}
+        run: python build.py
+      - name: Publicar cambios
+        run: |
+          git config user.name "wanderhaus-bot"
+          git config user.email "bot@wanderhaus.com"
+          git add index.html
+          git commit -m "Actualizacion automatica del calendario" || echo "Sin cambios hoy"
+          git push
